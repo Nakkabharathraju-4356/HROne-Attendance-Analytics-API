@@ -18,10 +18,15 @@ $env:MONGO_DB = "attendance_db"
 uvicorn app.main:app --port 8000
 ```
 
-For MongoDB Atlas, set `MONGO_URI` to your Atlas connection string instead. Set real environment variables rather than committing credentials. The application also supports a local `.env` for development, but do not commit it.
+For MongoDB Atlas, set `MONGO_URI` to your Atlas connection string in the current PowerShell session. Replace the placeholder with your own connection string; do not commit or share it.
 
-Open `http://127.0.0.1:8000/docs` for interactive API documentation. `GET /health` pings MongoDB and returns 503 if it is unavailable.
+```powershell
+$env:MONGO_URI = "YOUR_MONGODB_ATLAS_CONNECTION_STRING"
+$env:MONGO_DB = "attendance_db"
+uvicorn app.main:app --port 8000
+```
 
+The application supports a local `.env` file for development, but `.env` files and credentials must not be committed to Git.
 ## Important implementation notes
 - All code is in `app/main.py`; indexes are created idempotently at application startup.
 - Instants cross the API boundary as epoch milliseconds and are stored as BSON datetimes.
